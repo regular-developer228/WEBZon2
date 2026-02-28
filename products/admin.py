@@ -1,16 +1,24 @@
 from django.contrib import admin
 from .models import Product
+from .models import Category
 
 # Register your models here.
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    search_fields = ['name']
+
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'is_available', 'created_at']
-    list_filter = ['is_available', 'created_at']
+    list_display = ['name', 'category', 'price', 'is_available', 'created_at', 'colored_status']
+    list_filter = ['category', 'is_available', 'created_at']
+    autocomplete_fields = ['category']
     search_fields = ['name', 'description']
     list_per_page = 20
     ordering = ['created_at']
-    readonly_fields = ['created_at']
-    date_hierarchy = "created_at"
+    readonly_fields = ['created_at', 'colored_status']
+    date_hierarchy = 'created_at'
+    list_editable = ['price', 'is_available']
 
     fieldsets = (
         ("Main Info", {
@@ -24,3 +32,21 @@ class ProductAdmin(admin.ModelAdmin):
             "classes": ('collapse',)
         })
     )
+
+    def colored_status(self, obj):
+        if obj.is_available:
+            return "In stock"
+        return "Not available"
+    colored_status.short_description = "Status"
+
+    actions = ['make_available', 'make_not_available']
+
+    def make_available(self, request, queryset):
+        queryset.update(is_available=True)
+        self.message_user(request, 'Products marked as available.')
+    make_available.short_description = 'Mark as available'
+
+    def make_not_available(self, request, queryset):
+        queryset.update(is_available=False)
+        self.message_user(request, 'Products marked as not available.')
+    make_not_available.short_description = 'Mark as not available'
