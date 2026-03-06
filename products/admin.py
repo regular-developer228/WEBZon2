@@ -8,7 +8,6 @@ admin.site.site_header = "WEBZon"
 admin.site.site_title = "Admin dashboard"
 admin.site.index_title = "Welcome!"
 
-
 # Register your models here.
 @admin.register(Review)
 class ReviewInLine(admin.TabularInline):
