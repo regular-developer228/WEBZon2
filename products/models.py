@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import ForeignKey
+
 
 # Create your models here.
 class Category(models.Model):
@@ -31,3 +33,13 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Review(models.Model):
+    product = ForeignKey(Product, on_delete=models.CASCADE)
+    author = models.CharField(max_length=100)
+    text = models.TextField()
+    rating = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"

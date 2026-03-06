@@ -1,8 +1,19 @@
 from django.contrib import admin
 from .models import Product
 from .models import Category
+from .models import Review
+
+from django.contrib import admin
+admin.site.site_header = "WEBZon"
+admin.site.site_title = "Admin dashboard"
+admin.site.index_title = "Welcome!"
+
 
 # Register your models here.
+@admin.register(Review)
+class ReviewInLine(admin.TabularInline):
+    model = Review.extra = 1
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
@@ -10,6 +21,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    inlines = [ReviewInLine]
     list_display = ['name', 'category', 'price', 'is_available', 'created_at', 'colored_status']
     list_filter = ['category', 'is_available', 'created_at']
     autocomplete_fields = ['category']
