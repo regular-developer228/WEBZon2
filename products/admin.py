@@ -9,9 +9,9 @@ admin.site.site_title = "Admin dashboard"
 admin.site.index_title = "Welcome!"
 
 # Register your models here.
-@admin.register(Review)
 class ReviewInLine(admin.TabularInline):
-    model = Review.extra = 1
+    model = Review
+    extra = 1
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

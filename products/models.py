@@ -38,8 +38,4 @@ class Review(models.Model):
     product = ForeignKey(Product, on_delete=models.CASCADE)
     author = models.CharField(max_length=100)
     text = models.TextField()
-    rating = models.IntegerField()
-
-    class Meta:
-        verbose_name = "Review"
-        verbose_name_plural = "Reviews"
+    rating = models.IntegerField(blank=True, null=True)

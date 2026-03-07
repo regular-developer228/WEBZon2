@@ -1,0 +1,215 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- AppBar -->
+    <nav class="appbar" id="appbar">
+        <div class="appbar__inner">
+            <a href="{% url 'home' %}" class="appbar__btn">
+                <span class="appbar__icon">⊞</span>
+                <span>Главная</span>
+            </a>
+            <a href="{% url 'cart' %}" class="appbar__btn">
+                <span class="appbar__icon">🛒</span>
+                <span>Корзина</span>
+            </a>
+            <a href="{% url 'search' %}" class="appbar__btn">
+                <span class="appbar__icon">⌕</span>
+                <span>Поиск</span>
+            </a>
+            <a href="{% url 'filter' %}" class="appbar__btn">
+                <span class="appbar__icon">⚙</span>
+                <span>Фильтр</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero / Panorama Header -->
+    <header class="hero">
+        <div class="hero__inner">
+            <p class="hero__eyebrow">Metro Shop</p>
+            <h1 class="hero__title">Ваш магазин<br><span class="hero__accent">будущего</span></h1>
+            <p class="hero__sub">Новинки · Хиты · Акции</p>
+        </div>
+        <div class="hero__panorama-text" aria-hidden="true">METRO SHOP</div>
+    </header>
+
+    <main class="main-content">
+
+        <!-- Spotlight: Live Tiles -->
+        <section class="section spotlight-section">
+            <h2 class="section__title" style="--accent:#0078D7">Spotlight</h2>
+            <div class="spotlight-grid">
+                {% for product in featured_products %}
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="tile tile--spotlight tile--{{ forloop.counter }}"
+                       style="animation-delay: {{ forloop.counter0 }}00ms">
+                        {% if not product.is_available %}
+                            <span class="badge badge--unavailable">Нет в наличии</span>
+                        {% endif %}
+                        <div class="tile__body">
+                            <span class="tile__category">{{ product.category.name }}</span>
+                            <h3 class="tile__name">{{ product.name }}</h3>
+                            <p class="tile__desc">{{ product.description|truncatechars:80 }}</p>
+                        </div>
+                        <div class="tile__footer">
+                            <span class="tile__price">{{ product.price }} ₽</span>
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет товаров</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Новинки -->
+        <section class="section scroll-section">
+            <div class="section__header">
+                <h2 class="section__title" style="--accent:#107C10">Новинки</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn" data-scroll="new_products" data-dir="-1">&#8592;</button>
+                    <button class="scroll-btn" data-scroll="new_products" data-dir="1">&#8594;</button>
+                </div>
+            </div>
+            <div class="scroll-track" id="new_products">
+                {% for product in new_products %}
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="card"
+                       style="animation-delay: {{ forloop.counter0 }}00ms">
+                        {% if not product.is_available %}
+                            <span class="badge badge--unavailable">Нет в наличии</span>
+                        {% endif %}
+                        <span class="card__cat">{{ product.category.name }}</span>
+                        <h3 class="card__name">{{ product.name }}</h3>
+                        <p class="card__price">{{ product.price }} ₽</p>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет товаров</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Хиты продаж -->
+        <section class="section scroll-section">
+            <div class="section__header">
+                <h2 class="section__title" style="--accent:#FF8C00">Хиты продаж</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn" data-scroll="bestsellers" data-dir="-1">&#8592;</button>
+                    <button class="scroll-btn" data-scroll="bestsellers" data-dir="1">&#8594;</button>
+                </div>
+            </div>
+            <div class="scroll-track" id="bestsellers">
+                {% for product in bestsellers %}
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="card card--orange"
+                       style="animation-delay: {{ forloop.counter0 }}00ms">
+                        {% if not product.is_available %}
+                            <span class="badge badge--unavailable">Нет в наличии</span>
+                        {% endif %}
+                        <span class="card__hit">★ ХИТ</span>
+                        <span class="card__cat">{{ product.category.name }}</span>
+                        <h3 class="card__name">{{ product.name }}</h3>
+                        <p class="card__price">{{ product.price }} ₽</p>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет товаров</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Скидки и акции -->
+        <section class="section scroll-section">
+            <div class="section__header">
+                <h2 class="section__title" style="--accent:#E81123">Скидки и акции</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn" data-scroll="sale_products" data-dir="-1">&#8592;</button>
+                    <button class="scroll-btn" data-scroll="sale_products" data-dir="1">&#8594;</button>
+                </div>
+            </div>
+            <div class="scroll-track" id="sale_products">
+                {% for product in sale_products %}
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="card card--red"
+                       style="animation-delay: {{ forloop.counter0 }}00ms">
+                        {% if not product.is_available %}
+                            <span class="badge badge--unavailable">Нет в наличии</span>
+                        {% endif %}
+                        <span class="badge badge--sale">СКИДКА</span>
+                        <span class="card__cat">{{ product.category.name }}</span>
+                        <h3 class="card__name">{{ product.name }}</h3>
+                        <p class="card__price">{{ product.price }} ₽</p>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет товаров</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Рекомендуемые -->
+        <section class="section scroll-section">
+            <div class="section__header">
+                <h2 class="section__title" style="--accent:#881798">Рекомендуемые</h2>
+                <div class="scroll-controls">
+                    <button class="scroll-btn" data-scroll="recommended" data-dir="-1">&#8592;</button>
+                    <button class="scroll-btn" data-scroll="recommended" data-dir="1">&#8594;</button>
+                </div>
+            </div>
+            <div class="scroll-track" id="recommended">
+                {% for product in recommended_products %}
+                    <a href="{% url 'product_detail' product.pk %}"
+                       class="card card--purple"
+                       style="animation-delay: {{ forloop.counter0 }}00ms">
+                        {% if not product.is_available %}
+                            <span class="badge badge--unavailable">Нет в наличии</span>
+                        {% endif %}
+                        <span class="card__cat">{{ product.category.name }}</span>
+                        <h3 class="card__name">{{ product.name }}</h3>
+                        <p class="card__price">{{ product.price }} ₽</p>
+                        <div class="card__rating" data-product-id="{{ product.pk }}">
+                            {% with reviews=product.review_set.all %}
+                                {% if reviews %}
+                                    {% with total=0 count=0 %}
+                                        <span class="stars" data-reviews='[{% for r in reviews %}{{ r.rating }}{% if not forloop.last %},{% endif %}{% endfor %}]'></span>
+                                    {% endwith %}
+                                {% else %}
+                                    <span class="stars stars--empty">☆☆☆☆☆</span>
+                                {% endif %}
+                            {% endwith %}
+                        </div>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет товаров</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- По категориям -->
+        <section class="section categories-section">
+            <h2 class="section__title" style="--accent:#0078D7">По категориям</h2>
+            <div class="categories-grid">
+                {% for category in categories %}
+                    <a href="{% url 'category_detail' category.pk %}"
+                       class="cat-tile cat-tile--{{ forloop.counter }}"
+                       style="animation-delay: {{ forloop.counter0 }}50ms">
+                        <span class="cat-tile__name">{{ category.name }}</span>
+                    </a>
+                {% empty %}
+                    <p class="empty-msg">Нет категорий</p>
+                {% endfor %}
+            </div>
+        </section>
+
+    </main>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
