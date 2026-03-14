@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} — Metro Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+</head>
+<body>
+
+    <!-- AppBar -->
+    <nav class="appbar" id="appbar">
+        <div class="appbar__inner">
+            <a href="{% url 'home' %}" class="appbar__btn">
+                <span class="appbar__icon">⊞</span>
+                <span>Главная</span>
+            </a>
+            <a href="{% url 'cart' %}" class="appbar__btn">
+                <span class="appbar__icon">🛒</span>
+                <span>Корзина</span>
+            </a>
+            <a href="{% url 'search' %}" class="appbar__btn">
+                <span class="appbar__icon">⌕</span>
+                <span>Поиск</span>
+            </a>
+            <a href="{% url 'filter' %}" class="appbar__btn">
+                <span class="appbar__icon">⚙</span>
+                <span>Фильтр</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}" class="breadcrumb__link">Главная</a>
+        {% if product.category %}
+            <span class="breadcrumb__sep">›</span>
+            <a href="{% url 'category_detail' product.category.pk %}" class="breadcrumb__link">{{ product.category.name }}</a>
+        {% endif %}
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current">{{ product.name }}</span>
+    </div>
+
+    <main class="pd-main">
+
+        <!-- Hero блок товара -->
+        <section class="pd-hero">
+            <div class="pd-hero__color-block"></div>
+
+            <div class="pd-hero__content">
+                <div class="pd-hero__meta">
+                    {% if product.category %}
+                        <a href="{% url 'category_detail' product.category.pk %}" class="pd-hero__cat">
+                            {{ product.category.name }}
+                        </a>
+                    {% endif %}
+                    {% if not product.is_available %}
+                        <span class="pd-badge pd-badge--na">Нет в наличии</span>
+                    {% else %}
+                        <span class="pd-badge pd-badge--available">В наличии</span>
+                    {% endif %}
+                </div>
+
+                <h1 class="pd-hero__title">{{ product.name }}</h1>
+
+                {% if avg_rating %}
+                    <div class="pd-rating">
+                        <span class="pd-rating__stars" data-avg="{{ avg_rating }}"></span>
+                        <span class="pd-rating__val">{{ avg_rating|floatformat:1 }} / 5</span>
+                        <span class="pd-rating__count">({{ reviews.count }} отзыв{{ reviews.count|pluralize:",,ов" }})</span>
+                    </div>
+                {% endif %}
+
+                <p class="pd-hero__desc">{{ product.description }}</p>
+
+                <div class="pd-hero__footer">
+                    <span class="pd-price">{{ product.price }} ₽</span>
+                    {% if product.is_available %}
+                        <form method="post" action="{% url 'cart_add' product.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="pd-btn pd-btn--primary">В корзину</button>
+                        </form>
+                    {% else %}
+                        <button class="pd-btn pd-btn--disabled" disabled>Недоступно</button>
+                    {% endif %}
+                </div>
+
+                <p class="pd-meta-date">Добавлен: {{ product.created_at|date:"d.m.Y" }}</p>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
+        <section class="pd-reviews">
+            <h2 class="pd-section-title" style="--accent:#881798">
+                Отзывы
+                {% if reviews %}
+                    <span class="pd-section-title__count">{{ reviews.count }}</span>
+                {% endif %}
+            </h2>
+
+            {% if reviews %}
+                <div class="pd-reviews__list">
+                    {% for review in reviews %}
+                        <article class="review-card" style="animation-delay: {{ forloop.counter0 }}00ms">
+                            <div class="review-card__header">
+                                <span class="review-card__author">{{ review.author }}</span>
+                                <span class="review-card__stars" data-rating="{{ review.rating }}"></span>
+                            </div>
+                            <p class="review-card__text">{{ review.text }}</p>
+                        </article>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="pd-empty">Отзывов пока нет. Будьте первым!</p>
+            {% endif %}
+        </section>
+
+    </main>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/detail.js' %}"></script>
+</body>
+</html>

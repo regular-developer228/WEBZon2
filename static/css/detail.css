@@ -1,0 +1,421 @@
+/* =============================================
+   detail.css — product_detail & category_detail
+   ============================================= */
+
+/* ---- BREADCRUMB ---- */
+.breadcrumb {
+    padding: 14px 32px;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid #242424;
+}
+
+.breadcrumb__link {
+    color: #777;
+    transition: color .12s;
+}
+
+.breadcrumb__link:hover { color: var(--blue); }
+
+.breadcrumb__sep { color: #444; }
+
+.breadcrumb__current { color: #aaa; }
+
+/* =============================================
+   PRODUCT DETAIL
+   ============================================= */
+.pd-main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+}
+
+/* ---- Hero ---- */
+.pd-hero {
+    display: grid;
+    grid-template-columns: 8px 1fr;
+    gap: 0;
+    margin: 32px 0 40px;
+    animation: fadeUp .4s ease-out both;
+}
+
+.pd-hero__color-block {
+    background: var(--blue);
+    align-self: stretch;
+}
+
+.pd-hero__content {
+    padding: 28px 28px 28px 32px;
+    background: #242424;
+}
+
+.pd-hero__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.pd-hero__cat {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    transition: opacity .12s;
+}
+
+.pd-hero__cat:hover { opacity: .75; }
+
+/* availability badges */
+.pd-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+}
+
+.pd-badge--available { background: var(--green); color: #fff; }
+.pd-badge--na        { background: #555;         color: #fff; }
+
+.pd-hero__title {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.02em;
+    margin-bottom: 16px;
+}
+
+/* rating row */
+.pd-rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.pd-rating__stars { font-size: 16px; color: #FFD700; letter-spacing: 2px; }
+
+.pd-rating__val {
+    font-size: 13px;
+    font-weight: 600;
+    color: #FFD700;
+}
+
+.pd-rating__count {
+    font-size: 11px;
+    color: #666;
+}
+
+.pd-hero__desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #bbb;
+    margin-bottom: 28px;
+    max-width: 640px;
+}
+
+.pd-hero__footer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.pd-price {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -.01em;
+}
+
+/* buttons */
+.pd-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: filter .15s;
+    text-decoration: none;
+}
+
+.pd-btn--primary {
+    background: var(--blue);
+    color: #fff;
+}
+
+.pd-btn--primary:hover { filter: brightness(1.15); }
+
+.pd-btn--disabled {
+    background: #333;
+    color: #555;
+    cursor: not-allowed;
+}
+
+.pd-meta-date {
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #444;
+}
+
+/* ---- Section title (shared) ---- */
+.pd-section-title {
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    padding-left: 12px;
+    border-left: 4px solid var(--accent, #881798);
+    line-height: 1;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pd-section-title__count {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    letter-spacing: 0;
+}
+
+/* ---- Reviews ---- */
+.pd-reviews {
+    margin-top: 48px;
+}
+
+.pd-reviews__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 4px;
+}
+
+.review-card {
+    background: #242424;
+    padding: 18px 20px;
+    opacity: 0;
+    animation: fadeUp .35s ease-out forwards;
+}
+
+.review-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.review-card__author {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #aaa;
+}
+
+.review-card__stars {
+    font-size: 13px;
+    color: #FFD700;
+    letter-spacing: 1px;
+}
+
+.review-card__text {
+    font-size: 13px;
+    line-height: 1.65;
+    color: #888;
+}
+
+.pd-empty {
+    color: #555;
+    font-size: 13px;
+    padding: 20px 0;
+    letter-spacing: .05em;
+}
+
+/* =============================================
+   CATEGORY DETAIL
+   ============================================= */
+
+/* ---- Cat Hero ---- */
+.cat-hero {
+    position: relative;
+    min-height: 220px;
+    padding: 48px 32px 36px;
+    background: var(--bg);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.cat-hero__inner { position: relative; z-index: 2; }
+
+.cat-hero__eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+}
+
+.cat-hero__title {
+    font-size: clamp(36px, 7vw, 80px);
+    font-weight: 300;
+    line-height: .95;
+    letter-spacing: -.02em;
+}
+
+.cat-hero__count {
+    margin-top: 12px;
+    font-size: 12px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: #555;
+}
+
+.cat-hero__bg {
+    position: absolute;
+    right: -24px;
+    bottom: -18px;
+    font-size: clamp(70px, 18vw, 220px);
+    font-weight: 700;
+    letter-spacing: -.04em;
+    color: rgba(255,255,255,.03);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ---- Products grid ---- */
+.cat-main {
+    padding: 32px 32px 80px;
+}
+
+.cat-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 4px;
+}
+
+.cat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    padding: 16px;
+    background: #242424;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeUp .35s ease-out forwards;
+    transition: background .15s;
+    border-left: 3px solid transparent;
+}
+
+.cat-card:hover {
+    background: #2e2e2e;
+    border-left-color: var(--blue);
+}
+
+.cat-card__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+}
+
+.cat-card__badge--na {
+    background: #444;
+    color: #888;
+}
+
+.cat-card__body { flex: 1; }
+
+.cat-card__name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.cat-card__desc {
+    font-size: 11px;
+    line-height: 1.55;
+    color: #666;
+}
+
+.cat-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid #333;
+    margin-top: 10px;
+}
+
+.cat-card__price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.cat-card__stars {
+    font-size: 11px;
+    color: #FFD700;
+    letter-spacing: 1px;
+}
+
+/* ---- Empty state ---- */
+.cat-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 40px 0;
+}
+
+.cat-empty__text {
+    font-size: 18px;
+    font-weight: 300;
+    color: #555;
+    letter-spacing: -.01em;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 600px) {
+    .pd-main,
+    .cat-main  { padding: 0 16px 60px; }
+
+    .breadcrumb { padding: 12px 16px; }
+
+    .cat-hero { padding: 36px 16px 28px; }
+
+    .pd-hero { grid-template-columns: 4px 1fr; }
+    .pd-hero__content { padding: 20px 16px; }
+
+    .pd-reviews__list,
+    .cat-product-grid { grid-template-columns: 1fr 1fr; }
+}

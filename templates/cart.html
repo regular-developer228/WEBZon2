@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина — Metro Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+</head>
+<body>
+
+    <!-- AppBar -->
+    <nav class="appbar" id="appbar">
+        <div class="appbar__inner">
+            <a href="{% url 'home' %}" class="appbar__btn">
+                <span class="appbar__icon">⊞</span>
+                <span>Главная</span>
+            </a>
+            <a href="{% url 'cart' %}" class="appbar__btn appbar__btn--active">
+                <span class="appbar__icon">🛒</span>
+                <span>Корзина</span>
+            </a>
+            <a href="{% url 'search' %}" class="appbar__btn">
+                <span class="appbar__icon">⌕</span>
+                <span>Поиск</span>
+            </a>
+            <a href="{% url 'filter' %}" class="appbar__btn">
+                <span class="appbar__icon">⚙</span>
+                <span>Фильтр</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}" class="breadcrumb__link">Главная</a>
+        <span class="breadcrumb__sep">›</span>
+        <span class="breadcrumb__current">Корзина</span>
+    </div>
+
+    <!-- Header -->
+    <header class="cart-hero">
+        <div class="cart-hero__inner">
+            <p class="cart-hero__eyebrow">Metro Shop</p>
+            <h1 class="cart-hero__title">Корзина</h1>
+            {% if cart_items %}
+                <p class="cart-hero__count">{{ cart_items|length }} товар{{ cart_items|length|pluralize:",,ов" }}</p>
+            {% endif %}
+        </div>
+        <div class="cart-hero__bg" aria-hidden="true">КОРЗИНА</div>
+    </header>
+
+    <main class="cart-main">
+
+        {% if cart_items %}
+
+            <!-- Список товаров -->
+            <div class="cart-list">
+                {% for item in cart_items %}
+                    <div class="cart-item" style="animation-delay: {{ forloop.counter0 }}60ms">
+
+                        <div class="cart-item__info">
+                            <a href="{% url 'product_detail' item.product.pk %}" class="cart-item__name">
+                                {{ item.product.name }}
+                            </a>
+                            {% if item.product.category %}
+                                <span class="cart-item__cat">{{ item.product.category.name }}</span>
+                            {% endif %}
+                        </div>
+
+                        <!-- Количество -->
+                        <div class="cart-item__qty">
+                            <form method="post" action="{% url 'cart_update' item.product.pk %}">
+                                {% csrf_token %}
+                                <button type="submit" name="action" value="decrease" class="qty-btn">−</button>
+                                <span class="qty-val">{{ item.quantity }}</span>
+                                <button type="submit" name="action" value="increase" class="qty-btn">+</button>
+                            </form>
+                        </div>
+
+                        <!-- Цена за единицу -->
+                        <div class="cart-item__price-unit">
+                            {{ item.product.price }} ₽
+                        </div>
+
+                        <!-- Сумма по позиции -->
+                        <div class="cart-item__price-total">
+                            {{ item.total }} ₽
+                        </div>
+
+                        <!-- Удалить -->
+                        <form method="post" action="{% url 'cart_remove' item.product.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="cart-item__remove" title="Удалить">✕</button>
+                        </form>
+
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Итог -->
+            <div class="cart-summary">
+                <div class="cart-summary__row">
+                    <span class="cart-summary__label">Товаров</span>
+                    <span class="cart-summary__val">{{ cart_items|length }}</span>
+                </div>
+                <div class="cart-summary__row cart-summary__row--total">
+                    <span class="cart-summary__label">Итого</span>
+                    <span class="cart-summary__val cart-summary__val--big">{{ cart_total }} ₽</span>
+                </div>
+                <div class="cart-summary__actions">
+                    <form method="post" action="{% url 'cart_clear' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="pd-btn pd-btn--ghost">Очистить</button>
+                    </form>
+                    <a href="{% url 'home' %}" class="pd-btn pd-btn--secondary">Продолжить покупки</a>
+                    <a href="#" class="pd-btn pd-btn--primary">Оформить заказ</a>
+                </div>
+            </div>
+
+        {% else %}
+
+            <!-- Пустая корзина -->
+            <div class="cart-empty">
+                <span class="cart-empty__icon">🛒</span>
+                <p class="cart-empty__title">Корзина пуста</p>
+                <p class="cart-empty__sub">Добавьте товары с главной страницы</p>
+                <a href="{% url 'home' %}" class="pd-btn pd-btn--primary">На главную</a>
+            </div>
+
+        {% endif %}
+
+    </main>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

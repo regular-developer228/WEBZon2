@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metro Shop</title>
+    <title>WEBZon</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -36,11 +36,11 @@
     <!-- Hero / Panorama Header -->
     <header class="hero">
         <div class="hero__inner">
-            <p class="hero__eyebrow">Metro Shop</p>
+            <p class="hero__eyebrow">WEBZon</p>
             <h1 class="hero__title">Ваш магазин<br><span class="hero__accent">будущего</span></h1>
             <p class="hero__sub">Новинки · Хиты · Акции</p>
         </div>
-        <div class="hero__panorama-text" aria-hidden="true">METRO SHOP</div>
+        <div class="hero__panorama-text" aria-hidden="true">WEBZON</div>
     </header>
 
     <main class="main-content">
@@ -62,7 +62,7 @@
                             <p class="tile__desc">{{ product.description|truncatechars:80 }}</p>
                         </div>
                         <div class="tile__footer">
-                            <span class="tile__price">{{ product.price }} ₽</span>
+                            <span class="tile__price">{{ product.price }} ГРН</span>
                         </div>
                     </a>
                 {% empty %}
@@ -90,7 +90,7 @@
                         {% endif %}
                         <span class="card__cat">{{ product.category.name }}</span>
                         <h3 class="card__name">{{ product.name }}</h3>
-                        <p class="card__price">{{ product.price }} ₽</p>
+                        <p class="card__price">{{ product.price }} ГРН</p>
                     </a>
                 {% empty %}
                     <p class="empty-msg">Нет товаров</p>
@@ -118,7 +118,7 @@
                         <span class="card__hit">★ ХИТ</span>
                         <span class="card__cat">{{ product.category.name }}</span>
                         <h3 class="card__name">{{ product.name }}</h3>
-                        <p class="card__price">{{ product.price }} ₽</p>
+                        <p class="card__price">{{ product.price }} ГРН</p>
                     </a>
                 {% empty %}
                     <p class="empty-msg">Нет товаров</p>
@@ -146,7 +146,7 @@
                         <span class="badge badge--sale">СКИДКА</span>
                         <span class="card__cat">{{ product.category.name }}</span>
                         <h3 class="card__name">{{ product.name }}</h3>
-                        <p class="card__price">{{ product.price }} ₽</p>
+                        <p class="card__price">{{ product.price }} ГРН</p>
                     </a>
                 {% empty %}
                     <p class="empty-msg">Нет товаров</p>
@@ -173,7 +173,7 @@
                         {% endif %}
                         <span class="card__cat">{{ product.category.name }}</span>
                         <h3 class="card__name">{{ product.name }}</h3>
-                        <p class="card__price">{{ product.price }} ₽</p>
+                        <p class="card__price">{{ product.price }} ГРН</p>
                         <div class="card__rating" data-product-id="{{ product.pk }}">
                             {% with reviews=product.review_set.all %}
                                 {% if reviews %}
