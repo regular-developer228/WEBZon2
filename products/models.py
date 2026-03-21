@@ -39,3 +39,10 @@ class Review(models.Model):
     author = models.CharField(max_length=100)
     text = models.TextField()
     rating = models.IntegerField(blank=True, null=True)
+
+class Order(models.Model):
+    product_list = []
+    order_number = models.CharField(max_length=50, unique=True, verbose_name='Order number')
+    customer_name = models.CharField(max_length=200, verbose_name='Customer name')
+    customer_email = models.EmailField(max_length=100, verbose_name='Customer email')
+    customer_phone = models.CharField(max_length=20, blank=True, verbose_name='Customer phone')
