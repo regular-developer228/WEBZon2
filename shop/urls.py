@@ -24,7 +24,7 @@ from django.conf import settings
 from products import views
 
 urlpatterns = [
-path('',                         views.index,           name='home'),
+path('',                         views.index,          name='home'),
     path('admin/', admin.site.urls),
     path('product/<int:pk>/', views.product_detail, name='product_detail'),
     path('category/<int:pk>/', views.category_detail, name='category_detail'),
