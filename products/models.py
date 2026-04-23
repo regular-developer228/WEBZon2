@@ -94,4 +94,42 @@ class Order(models.Model):
 # tovary v zakaze
 # schto i v kakom kolichestve zakazano
 class OrderItem(models.Model):
-    pass
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE,
+        related_name='items',
+        verbose_name='Order'
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name='Item'
+    )
+
+    product_name = models.CharField(
+        max_length=200,
+        verbose_name='Item name'
+    )
+    product_price = models.DecimalField( # 100.50
+        max_digits=10,
+        decimal_places=2,
+        verbose_name='Price at the order moment'
+    )
+    quantity = models.PositiveIntegerField(
+        default=1,
+        verbose_name='Quantity'
+    )
+
+    class Meta:
+        verbose_name = 'Order placement'
+        verbose_name_plural = 'Order placements'
+
+    def __str__(self):
+        return f'{self.product_name} x{self.quantity}'
+        # (self.product_name + " x" + str(self.quantity))
+
+    @property
+    def total_price(self):
+        return self.product_price * self.quantity
