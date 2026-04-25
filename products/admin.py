@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Product
 from .models import Category
 from .models import Review
+from .models import Order
+from .models import OrderItem
 
 from django.contrib import admin
 admin.site.site_header = "WEBZon"
@@ -12,6 +14,14 @@ admin.site.index_title = "Welcome!"
 class ReviewInLine(admin.TabularInline):
     model = Review
     extra = 1
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['order_number']
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ['product_name']
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):

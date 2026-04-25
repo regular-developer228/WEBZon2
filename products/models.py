@@ -84,11 +84,36 @@ class CartItem(models.Model):
 # nomer zakaza i informacja pro pokupcya
 # sozdayetsa posle potverzhdenia oplaty
 class Order(models.Model):
-    product_list = []
+    STATUS_PENDING = 'pending'
+    STATUS_PAID = 'paid'
+    STATUS_FAILED = 'failed'
+    STATUS_DELIVERED = 'delivered'
+    STATUS_CHOICES = [
+        (STATUS_PENDING, 'Waiting for payment'),
+        (STATUS_PAID, 'Payment completed'),
+        (STATUS_FAILED, 'Payment failed'),
+        (STATUS_DELIVERED, 'Already delivered')
+    ]
+    # list_products = []
     order_number = models.CharField(max_length=50, unique=True, verbose_name='Order number')
     customer_name = models.CharField(max_length=200, verbose_name='Customer name')
     customer_email = models.EmailField(max_length=100, verbose_name='Customer email')
     customer_phone = models.CharField(max_length=20, blank=True, verbose_name='Customer phone')
+    delivery_address = models.TextField(blank=True, verbose_name='Delivery address')
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Total amount')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=STATUS_PENDING, verbose_name='Status')
+    liqpay_payment_id = models.CharField(max_length=255, blank=True, verbose_name='LiqPay Payment ID')
+    liqpay_status = models.CharField(max_length=50, blank=True, verbose_name='LiqPay Status')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Order date')
+    update_at = models.DateTimeField(auto_now=True, verbose_name='Updated')
+
+    class Meta:
+        verbose_name = 'Order'
+        verbose_name_plural = 'Orders'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'Order #{self.order_number} - {self.customer_name}'
 
 
 # tovary v zakaze
