@@ -4,6 +4,7 @@ from .models import Category
 from .models import Review
 from .models import Order
 from .models import OrderItem
+from .models import CartItem
 
 from django.contrib import admin
 admin.site.site_header = "WEBZon"
@@ -15,13 +16,89 @@ class ReviewInLine(admin.TabularInline):
     model = Review
     extra = 1
 
+
+@admin.register(CartItem)
+
+class CartItemAdmin(admin.ModelAdmin):
+
+    list_display = (
+
+        'session_key',
+
+        'product',
+
+        'quantity',
+
+        'added_at'
+
+    )
+
+    list_filter = ('product',)
+
+    search_fields = ('product',)
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['order_number']
+    list_display = (
+
+        'order_number',
+
+        'customer_name',
+
+        'customer_email',
+
+        'customer_phone',
+
+        'delivery_address',
+
+        'total_amount',
+
+        'status',
+
+        'liqpay_payment_id',
+
+        'liqpay_status',
+
+        'created_at',
+
+        'update_at'
+
+    )
+
+    list_filter = ('order_number', 'status')
+
+    search_fields = (
+
+        'order_number',
+
+        'customer_name',
+
+        'customer_email',
+
+        'customer_phone',
+
+        'delivery_address',
+
+        'total_amount',
+
+        'status')
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ['product_name']
+    list_display = (
+
+        'order',
+
+        'product',
+
+        'product_name',
+
+        'product_price',
+
+        'quantity'
+
+    )
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
