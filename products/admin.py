@@ -6,7 +6,6 @@ from .models import Order
 from .models import OrderItem
 from .models import CartItem
 
-from django.contrib import admin
 admin.site.site_header = "WEBZon"
 admin.site.site_title = "Admin dashboard"
 admin.site.index_title = "Welcome!"
@@ -22,15 +21,10 @@ class ReviewInLine(admin.TabularInline):
 class CartItemAdmin(admin.ModelAdmin):
 
     list_display = (
-
         'session_key',
-
         'product',
-
         'quantity',
-
         'added_at'
-
     )
 
     list_filter = ('product',)
