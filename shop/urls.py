@@ -33,6 +33,9 @@ path('',                         views.index,          name='home'),
     path('search/', views.search, name='search'),
     path('filter/', views.filter_view, name='filter'),
 
+url(r'^pay/$', PayView.as_view(), name='pay_view'),
+    url(r'^pay-callback/$', PayCallbackView.as_view(), name='pay_callback'),
+
     # Корзина
     path('cart/', views.cart, name='cart'),
     path('cart/add/<int:pk>/', views.cart_add, name='cart_add'),
