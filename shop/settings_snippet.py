@@ -1,11 +1,13 @@
 # https://www.liqpay.ua/
 from django.conf.global_settings import SESSION_ENGINE, MESSAGE_STORAGE
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 from shop.settings import INSTALLED_APPS
 
-LIQPAY_PUBLIC_KEY = 'sandbox_i17489931786'
-# LIQPAY_PRIVATE_KEY needs to be hidden in a separate ENV file (.env).
-LIQPAY_PRIVATE_KEY = 'sandbox_000000000000000000000000000000'
+LIQPAY_PUBLIC_KEY = os.getenv('LIQPAY_PUBLIC_KEY')
+LIQPAY_PRIVATE_KEY = os.getenv('LIQPAY_PRIVATE_KEY')
 # if there will be true, sandboxed API will be enabled. if false, actual API will be used.
 LIQPAY_SANDBOX = True
 
