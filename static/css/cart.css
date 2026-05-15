@@ -298,3 +298,14 @@
     .cart-summary__actions { flex-direction: column; }
     .pd-btn { width: 100%; justify-content: center; }
 }
+
+/* ---- LiqPay button ---- */
+.pd-btn--liqpay {
+    background: #00a651;
+    color: #fff;
+    gap: 8px;
+}
+
+.pd-btn--liqpay:hover { filter: brightness(1.12); }
+
+.pd-btn__icon { font-size: 16px; line-height: 1; }

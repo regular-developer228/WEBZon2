@@ -118,7 +118,15 @@
                         <button type="submit" class="pd-btn pd-btn--ghost">Очистить</button>
                     </form>
                     <a href="{% url 'home' %}" class="pd-btn pd-btn--secondary">Продолжить покупки</a>
-                    <a href="#" class="pd-btn pd-btn--primary">Оформить заказ</a>
+                    <!-- LiqPay оплата -->
+                    <form method="POST" action="https://www.liqpay.ua/api/3/checkout" accept-charset="utf-8">
+                        <input type="hidden" name="data"      value="{{ liqpay_data }}">
+                        <input type="hidden" name="signature" value="{{ liqpay_signature }}">
+                        <button type="submit" class="pd-btn pd-btn--primary pd-btn--liqpay">
+                            <span class="pd-btn__icon">💳</span>
+                            Оплатить {{ cart_total }} ₽
+                        </button>
+                    </form>
                 </div>
             </div>
 
